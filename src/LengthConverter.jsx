@@ -1,79 +1,71 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { toInch, toFoot, toYard, toCentimeter, toKilometer, toMeter } from './utils/index';
-
+// var algebra = require('algebra.js');
 
 class LengthConverter extends Component {
   constructor() {
     super();
     this.state = {
-      conversionType: 'inch',
-      foot: 0,
-      yard: 0,
-      centimeter: 0,
-      kilometer: 0,
-      meter: 0,
+      conversionType: 'Inch',
+      numberOfUnits: 0,
+      selected: false,
     };
-  }
-
-  convertUnits = (e) => {
-    let numberOfUnits = +e.target.value;
-    if (isNaN(numberOfUnits)) {
-      return;
+    this.conversion = {
+      Inch: 1/12,
+      Foot: 1,
+      Yard: 3,
+      Centimeter: 1/30.48,
+      Kilometer: 3280.84,
+      Meter: 3.28084
     }
-    this.setState((state) => {
-      return { numberOfUnits }
-    })
-  }
-
-  setConversionType = (e) => {
-    let conversionType = e.target.value;
-    this.setState((state) => {
-      return { conversionType }
-    })
   }
 
   RoundToHundredths = (val) => {
     return (Math.round(val * 100) / 100);
   };
 
+  componentDidMount(){
+    this.setState({selected: true});
+  }
 
   render() {
-    let Units = [
-      {label: 'Inch', value: toInch(this.state.conversionType, this.state.numberOfUnits)},
-      {label: 'Foot', value: toFoot(this.state.conversionType, this.state.numberOfUnits)},
-      {label: 'Yard', value: toYard(this.state.conversionType, this.state.numberOfUnits)},
-      {label: 'Centimeter', value: toCentimeter(this.state.conversionType, this.state.numberOfUnits)},
-      {label: 'Kilometer', value: toKilometer(this.state.conversionType, this.state.numberOfUnits)},
-      {label: 'Meter', value: toMeter(this.state.conversionType, this.state.numberOfUnits)},
-    ];
+    let Units = [];
+    for(let units in this.conversion){
+      Units.push({label: units, value: this.props.convert.call(this, this.state.conversionType, units, this.conversion, this.state.numberOfUnits)})
+    }
+
     return (
       <React.Fragment>
+        <div className='converter-container'>
         <div className='input-group'>
-          <input onChange={this.convertUnits} id='name' type='number' className='input-form' />
-            <select onChange={this.setConversionType} className='drop-down' id='type'>
-              <option defaultValue value='inch'>Inch</option>
-              <option value='foot'>Foot</option>
-              <option value='yard'>Yard</option>
-              <option value='centimeter'>Centimeter</option>
-              <option value='kilometer'>Kilometer</option>
-              <option value='meter'>Meter</option>
+          <input onChange={this.props.convertUnits.bind(this)} id='name' type='number' className='input-form' />
+          <div className='drop-down'>
+            <select onChange={this.props.setConversionType.bind(this)} id='type'>
+              <option defaultValue value='Inch'>Inch</option>
+              <option value='Foot'>Foot</option>
+              <option value='Yard'>Yard</option>
+              <option value='Centimeter'>Centimeter</option>
+              <option value='Kilometer'>Kilometer</option>
+              <option value='Meter'>Meter</option>
             </select>
-        </div>
-        {Units.map((unit, i) => {
-        return (
-          <div className='answer' key={i}>
-            <div className='card-block'>
-              <h4>{unit.label}</h4>
-              <div>{this.RoundToHundredths(unit.value)}</div>
-            </div>
           </div>
-        )
-      })};
+        </div>
+        <div className='answer-container'>
+          {Units.map((unit, i) => {
+          return (
+            <div className='answer' key={i}>
+              <div className='card-block'>
+                <div>{unit.label}</div>
+                <div>{this.RoundToHundredths(unit.value) || 0}</div>
+              </div>
+            </div>
+          )
+        })}
+        </div>
+      </div>
       </React.Fragment>
     );
   }
-
 }
 
 export default LengthConverter;

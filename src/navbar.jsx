@@ -10,9 +10,10 @@ class NavBar extends Component {
 render(){ 
   return (
       <div className='navbar'>
-        <NavLink to='/liquid'>Liquids</NavLink>
-        <NavLink to='/length'>Lengths</NavLink> 
-        <NavLink to='/weight'>Weights</NavLink>
+        <NavLink activeClassName='is-active' className='banner liquid-link' to='/liquid' style={{ textDecoration: 'none' }}>Liquids</NavLink>
+        <NavLink activeClassName='is-active' className='banner length-link'to='/length' style={{ textDecoration: 'none' }}>Lengths</NavLink> 
+        <NavLink activeClassName='is-active' className='banner weight-link'to='/weight' style={{ textDecoration: 'none' }}>Weights</NavLink>
+        <NavLink activeClassName='is-active' className='banner temperature-link'to='/temperature' style={{ textDecoration: 'none' }}>Temperature</NavLink>
       </div>
     );
   }

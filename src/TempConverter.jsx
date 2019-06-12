@@ -1,30 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import{ toCelsius, toFahrenheit, toKelvin } from './utils/index'
 
-class WeightConverter extends Component {
+class TempConverter extends Component {
   constructor() {
     super();
     this.state = {
-      conversionType: 'Pound',
+      conversionType: 'Fahrenheit',
     };
-    this.conversion = {
-      Pound: 1,
-      Kilogram: 2.205,
-      Gram: 1/453.592,
-      Milligram: 1/453592,
-      Ounce: 1/16,
-    }
   }
   
   RoundToHundredths = (val) => {
     return (Math.round(val * 100) / 100);
   };
 
+
   render() {
-    let Units = [];
-    for(let units in this.conversion){
-      Units.push({label: units, value: this.props.convert.call(this, this.state.conversionType, units, this.conversion, this.state.numberOfUnits)})
-    }
+    let Units = [
+      {label: 'Celsius', value: toCelsius(this.state.conversionType, this.state.numberOfUnits)},
+      {label: 'Fahrenheit', value: toFahrenheit(this.state.conversionType, this.state.numberOfUnits)},
+      {label: 'Kelvin', value: toKelvin(this.state.conversionType, this.state.numberOfUnits)},
+    ];
 
     return (
       <React.Fragment>
@@ -33,11 +29,9 @@ class WeightConverter extends Component {
           <input onChange={this.props.convertUnits.bind(this)} id='name' type='number' className='input-form' />
           <div className='drop-down'>
             <select onChange={this.props.setConversionType.bind(this)} id='type'>
-              <option defaultValue value='Pound'>Pound</option>
-              <option value='Kilogram'>Kilogram</option>
-              <option value='Gram'>Gram</option>
-              <option value='Milligram'>Milligram</option>
-              <option value='Ounce'>Ounce</option>
+              <option defaultValue value='Fahrenheit'>Fahrenheit</option>
+              <option value='Celsius'>Celsius</option>
+              <option value='Kelvin'>Kelvin</option>
             </select>
           </div>
         </div>
@@ -59,4 +53,4 @@ class WeightConverter extends Component {
   }
 }
 
-export default WeightConverter;
+export default TempConverter;
