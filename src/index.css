@@ -28,23 +28,6 @@ code {
   border-bottom: 1mm ridge black;
 }
 
-.navbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  align-content: stretch;
-  flex-wrap: wrap;
-  text-align: center;
-  width: 50%;
-  margin: 0 auto;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-size: 23px;
-  font-family: 'Roboto';
-  text-decoration: none !important; 
-}
-
 .content { 
   border-top: 1mm ridge black;
 }
@@ -73,12 +56,27 @@ code {
   margin-top: 3px;
 }
 
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: stretch;
+  flex-wrap: wrap;
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 23px;
+  font-family: 'Roboto';
+  text-decoration: none !important; 
+}
+
 .banner {
   text-transform: uppercase;
   color: rgb(68, 68, 194);
-  width: 25%;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px 10px 10px 10px;
 }
 
 .banner:hover{
